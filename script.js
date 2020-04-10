@@ -11,8 +11,8 @@
   }
 
   let images = [
-    { src: 'dog.jpeg', alt: 'dog' },
-    { src: 'bear.jpeg', alt: 'bear' },
+    { src: '梶谷.png', alt: 'kajitani' },
+    { src: 'asitani.png', alt: 'asitani' },
     { src: 'lion.jpg', alt: 'lion' },
   ]
   const imageLength = images.length
