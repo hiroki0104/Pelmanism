@@ -15,6 +15,7 @@
     { src: 'bear.jpeg', alt: 'bear' },
     { src: 'lion.jpg', alt: 'lion' },
   ]
+  const imageLength = images.length
 
   let timer = NaN,
     score = 0,
@@ -26,7 +27,6 @@
   window.addEventListener('load', init)
   function init() {
     const table = document.getElementById('table')
-    const imageLength = images.length
     for (let i = 0; i < imageLength; ++i) {
       images.push(images[i])
     }
@@ -64,25 +64,24 @@
   function flip(e) {
     let src = e.srcElement.firstChild
     let srcParent = e.srcElement
-    console.log(src.classList)
-    if (flipTimer || src.textContent != '') {
+    if (flipTimer || src == null) {
       return
     }
     let alt = src.alt
     srcParent.classList = 'card'
     src.classList.add('appear')
 
-    if (prevImage == null) {
+    if (prevImage == null && prevTd == null) {
       prevImage = src
       prevTd = srcParent
       return
     }
-    console.log(prevImage)
     if (prevImage.alt == alt) {
-      if (++score == images.length / 2) {
+      if (++score == imageLength) {
         clearInterval(timer)
       }
       prevImage = null
+      prevTd = null
       clearTimeout(flipTimer)
     } else {
       flipTimer = setTimeout(() => {
@@ -91,6 +90,7 @@
         srcParent.className = 'card back'
         prevTd.className = 'card back'
         prevImage = null
+        prevTd = null
         flipTimer = NaN
       }, 1000)
     }
