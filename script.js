@@ -1,4 +1,5 @@
 ;(() => {
+  // 配列の要素をランダムに並べ替えるメソッドshuffle。プロトタイプに追加
   Array.prototype.shuffle = function () {
     let i = this.length
     while (i) {
@@ -11,10 +12,18 @@
   }
 
   let images = [
-    { src: 'dog.jpeg', alt: 'dog' },
+    { src: 'kajitani.jpg', alt: 'kaji' },
     { src: 'bear.jpeg', alt: 'bear' },
     { src: 'lion.jpg', alt: 'lion' },
+    { src: 'dog.jpeg', alt: 'dog' },
+    { src: 'asitani.jpg', alt: 'riku' },
+    { src: 'sai.jpeg', alt: 'sai' },
+    { src: 'panda.jpeg', alt: 'panda' },
+    { src: 'manmos.jpeg', alt: 'manmos' },
+    { src: 'saru.jpeg', alt: 'saru' },
+    { src: 'nezumi.png', alt: 'nezumi' },
   ]
+  const imageLength = images.length
 
   let timer = NaN,
     score = 0,
@@ -24,35 +33,38 @@
     startTime
 
   window.addEventListener('load', init)
+
+  // 初期化処理
   function init() {
-    const table = document.getElementById('table')
-    const imageLength = images.length
     for (let i = 0; i < imageLength; ++i) {
       images.push(images[i])
     }
     images.shuffle()
-    console.log(images)
-    for (let i = 0; i < 3; ++i) {
+
+    render()
+
+    startTime = new Date()
+    timer = setInterval(tick, 1000)
+  }
+
+  // 画面に描画
+  function render() {
+    const table = document.getElementById('table')
+    for (let i = 0; i < 4; ++i) {
       const tr = document.createElement('tr')
-      for (let j = 0; j < 2; ++j) {
+      for (let j = 0; j < 5; ++j) {
         const td = document.createElement('td')
         const img = document.createElement('img')
         td.className = 'card back'
-        // td.number = cards[i * 2 + j]
         td.addEventListener('click', flip)
-        const resource = images[i * 2 + j]
+        const resource = images[i * 5 + j]
         img.src = `img/${resource.src}`
         img.alt = resource.alt
-        console.log(img.alt)
-        console.log(img.src)
         td.appendChild(img)
         tr.appendChild(td)
       }
       table.appendChild(tr)
     }
-
-    startTime = new Date()
-    timer = setInterval(tick, 1000)
   }
 
   function tick() {
@@ -64,25 +76,24 @@
   function flip(e) {
     let src = e.srcElement.firstChild
     let srcParent = e.srcElement
-    console.log(src.classList)
-    if (flipTimer || src.textContent != '') {
+    if (flipTimer || src == null) {
       return
     }
     let alt = src.alt
     srcParent.classList = 'card'
     src.classList.add('appear')
 
-    if (prevImage == null) {
+    if (prevImage == null && prevTd == null) {
       prevImage = src
       prevTd = srcParent
       return
     }
-    console.log(prevImage)
     if (prevImage.alt == alt) {
-      if (++score == images.length / 2) {
+      if (++score == imageLength) {
         clearInterval(timer)
       }
       prevImage = null
+      prevTd = null
       clearTimeout(flipTimer)
     } else {
       flipTimer = setTimeout(() => {
@@ -91,6 +102,7 @@
         srcParent.className = 'card back'
         prevTd.className = 'card back'
         prevImage = null
+        prevTd = null
         flipTimer = NaN
       }, 1000)
     }

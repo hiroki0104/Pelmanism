@@ -3,6 +3,18 @@
   padding: 0;
 }
 
+table {
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+}
+
 img {
   width: 0px;
   height: 0px;
@@ -10,16 +22,19 @@ img {
 }
 
 .appear {
+  position: absolute;
+  top: 5%;
+  left: 5%;
   width: 90%;
   height: 90%;
   display: inline-block;
   border-radius: 10px;
-  margin: 0 auto;
 }
 
 td.card {
+  position: relative;
   width: 100px;
-  height: 140px;
+  height: 120px;
   border: 1px solid blue;
   border-radius: 10px;
   text-align: center;
@@ -30,5 +45,5 @@ td.card {
 
 td.back {
   background-image: url('img/card.png');
-  background-size: 100px 140px;
+  background-size: 100px 120px;
 }
